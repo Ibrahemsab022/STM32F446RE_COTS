@@ -9,6 +9,11 @@
 #define ROM_BASE_ADDRESS		0x1FFF0000UL
 
 
+
+/******************* Core Peripherals Base Addresses *******************/
+#define SYSTICK_BASE_ADDRESS	0xE000E010UL
+
+
 /******************* AHB1 Pperipheral Base Addresses *******************/
 #define GPIOA_BASE_ADDRESS		0x40020000U			
 #define GPIOB_BASE_ADDRESS      0x40020400U 
@@ -46,8 +51,15 @@
 
 
 
+/******************* SYSTICK Registers Definition Structures *******************/
+typedef struct
+{
+	volatile uint32_t CSR;			/*SysTick Control and Status register*/
+	volatile uint32_t RVR;          /*SysTick Reload Value register*/
+	volatile uint32_t CVR;          /*SysTick Current Value register*/
+	volatile uint32_t CALIB;        /*SysTick Calibration Value register*/
 
-
+}SYSTICK_RegDef_t;
 
 
 
@@ -113,7 +125,11 @@ typedef struct
 
 
 
-/******************* RCC Peripheral Definitions *******************/
+/******************* SysTick Peripheral Definitions *******************/
+#define SYSTICK	((SYSTICK_RegDef_t *) SYSTICK_BASE_ADDRESS)
+
+
+/******************* RCC Peripheral Definition *******************/
 #define RCC		((RCC_RegDef_t *) RCC_BASE_ADDRESS)
 
 
