@@ -3,16 +3,24 @@
 
 
 
+/******************* Defs *******************/
 
+#define NULL ((void *)0)
+
+/******************* Masks *******************/
+#define GPIO_1BIT_MASK  0b1
+#define GPIO_2BIT_MASK  0b11
+#define GPIO_4BIT_MASK	0b1111
 
 
 /******************* Error States Enum *******************/
 
 typedef enum
 {
-	Exit_Ok = 0,
-	InvalidPinOrPortNum,
-	NullPtr
+	GPIO_Exit_OK = 0,
+	GPIO_InvalidPortName,
+	GPIO_InvalidPinNum,
+	GPIO_NullPtr
 
 
 }GPIOErrorStates_t;
@@ -121,8 +129,8 @@ typedef enum
 
 typedef enum
 {
-	PIN_LOW = 0,
-	PIN_HIGH
+	LOW = 0,
+	HIGH
 }PinVal_t;
 
 
@@ -141,7 +149,7 @@ typedef struct
 	PullUpDown_t PullType;
 	AltFunc_t AltFunc;
 	
-}GPIO_PinConfig_t;
+}PinConfig_t;
 
 
 
@@ -163,23 +171,8 @@ typedef struct
  * 	Synch/Asynch: Synch.																			
  * 	Reentrant/NonReenterant: Re                                                						
  ***************************************************************************************************/
-uint8_t GPIO_u8PinInit(const GPIO_PinConfig_t * PinConfigs);
+uint8_t GPIO_u8PinInit(const PinConfig_t * PinConfigs);
 
-
-
-
-/****************************************************************************************************
- * 	Decription: This Function is used to init a GPIO Port (use it when all pins have same configs)
- * 	Parameters: - const PinConfig_t * PinConfigs: is a pointer to a struct contain the configs.
- * 	Returns: uint8_t errorState
- * 	Preconditions: - RCC is initialized and working
- * 				   - Clk enabled for GPIO Peripheral
- * 	Side effects: No side effects
- * 	Post Conditions: a GPIO Port is configed
- * 	Synch/Asynch: Synch.
- * 	Reentrant/NonReenterant: Re
- ***************************************************************************************************/
-uint8_t GPIO_u8PortInit(const GPIO_PinConfig_t * PinConfigs);
 
 
 
@@ -238,6 +231,8 @@ uint8_t GPIO_u8TogglePinValue(Port_t Port, Pin_t PinNum);
  * 	Reentrant/NonReenterant: Re                                                						
  ***************************************************************************************************/
 uint8_t GPIO_u8ReadPinValue(Port_t Port, Pin_t PinNum, PinVal_t* PinVal);
+
+
 
 
 
