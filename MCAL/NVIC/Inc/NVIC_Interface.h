@@ -13,7 +13,8 @@ typedef enum
 {
 	NVIVC_Exit_Ok,
 	NVIC_Invalid_IRQ,
-	NVIC_NULL_PTR
+	NVIC_NULL_PTR,
+	NVIC_Invalid_Priority
 
 }NVIC_ErrorState_t;
 
@@ -106,19 +107,10 @@ typedef enum
 	IRQ76_OTG_HS_WKUP,
 	IRQ77_OTG_HS,
 	IRQ78_DCMI,
-	IRQ79_Reserved,
-	IRQ80_Reserved,
-	IRQ81_FPU,
-	IRQ82_Reserved,
-	IRQ83_Reserved,
-	IRQ84_SPI4,
-	IRQ85_Reserved,
-	IRQ86_Reserved,
-	IRQ87_SAI1,
-	IRQ88_Reserved,
-	IRQ89_Reserved,
-	IRQ90_Reserved,
-	IRQ91_SAI2,
+	IRQ81_FPU = 81,
+	IRQ84_SPI4 = 84,
+	IRQ87_SAI1 = 87,
+	IRQ91_SAI2 = 91,
 	IRQ92_QuadSPI,
 	IRQ93_HDMI_CEC,
 	IRQ94_SPDIF_RX,
@@ -155,6 +147,21 @@ NVIC_ErrorState_t NVIC_EnableIRQ(NVIC_IRQs_t Copy_u8IRQNum);
  * 	Reentrant/NonReenterant: Re
  ***************************************************************************************************/
 NVIC_ErrorState_t NVIC_DisableIRQ(NVIC_IRQs_t Copy_u8IRQNum);
+
+
+
+/****************************************************************************************************
+ * 	@brief		 This Function is used to set the priority of the interrupt of a given source.
+ * 	@param 		 NVIC_IRQs_t Copy_u8IRQNum: an enum value that holds the IRQ number(position) from the vector table.
+ * 	@return 	 NVIC_ErrorState_t: return errorState
+ * 	@pre		 perfable SCB_SetPriGroup is used to set the config type of this priority(group vs sub)
+
+ * 	@post 		 Interrupt priority is set for this src
+ * 	Synch/Asynch: Synch.
+ * 	Reentrant/NonReenterant: Re
+ ***************************************************************************************************/
+NVIC_ErrorState_t NVIC_SetPriority(NVIC_IRQs_t Copy_u8IRQNum, uint8_t Copy_u8Priority);
+
 
 
 

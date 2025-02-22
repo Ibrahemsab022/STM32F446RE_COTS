@@ -2,19 +2,22 @@
 #define STM32F446xx_H
 
 
-/******************* Various Memories Base Addresses *******************/
 
+
+/******************* Core Peripherals Base Addresses *******************/
+/*@todo: add systic*/
+#define NVIC_BASE_ADDRESS	 	0xE000E100UL
+#define SCB_BASE_ADDRESS		0xE000E008UL
+
+
+
+/******************* Various Memories Base Addresses *******************/
 #define FLASH_BASE_ADDRESS		0x08004000UL
 #define SRAM_BASE_ADDRESS		0x20000000UL
 #define ROM_BASE_ADDRESS		0x1FFF0000UL
 
 
-
-/******************* Core Peripherals Base Addresses *******************/
-#define SYSTICK_BASE_ADDRESS	0xE000E010UL
-
-
-/******************* AHB1 Pperipheral Base Addresses *******************/
+/******************* AHB1 Peripheral Base Addresses *******************/
 #define GPIOA_BASE_ADDRESS		0x40020000U			
 #define GPIOB_BASE_ADDRESS      0x40020400U 
 #define GPIOC_BASE_ADDRESS      0x40020800U
@@ -27,7 +30,7 @@
 
 #define RCC_BASE_ADDRESS		0x40023800U
 
-/******************* AHB2 Pperipheral Base Addresses *******************/
+/******************* AHB2 Peripheral Base Addresses *******************/
 
 
 
@@ -39,47 +42,67 @@
 
 
 
-/******************* APB1 Pperipheral Base Addresses *******************/
+/******************* APB1 Peripheral Base Addresses *******************/
 
 
 
 
 
-/******************* APB2 Pperipheral Base Addresses *******************/
+/******************* APB2 Peripheral Base Addresses *******************/
 
 
 
 
-
-/******************* SYSTICK Registers Definition Structures *******************/
+/******************* SCB Registers Definition Structures *******************/
 typedef struct
 {
-	volatile uint32_t CSR;			/*SysTick Control and Status register*/
-	volatile uint32_t RVR;          /*SysTick Reload Value register*/
-	volatile uint32_t CVR;          /*SysTick Current Value register*/
-	volatile uint32_t CALIB;        /*SysTick Calibration Value register*/
+	volatile uint32_t ACTLR;					/*Auxiliary Control Register*/
+	volatile uint32_t RESERVED0[829];           /*Reserved for 3316 bytes offset*/
+	volatile uint32_t CPUID;                    /*CPU ID Base Register*/
+	volatile uint32_t ICSR;                     /*Interrupt Control and State Register*/
+	volatile uint32_t VTOR;                     /*Vector Table Offset Register*/
+	volatile uint32_t AIRCR;                    /*Application Interrupt and Reset Control Register*/
+	volatile uint32_t SCR;                      /*System Control Register*/
+	volatile uint32_t CCR;                      /*Configuration & Control Register*/
+	volatile uint32_t SHPR[3];                  /*System Handler Priority Registers*/
+	volatile uint32_t SHCRS;                    /*System Handler Control and State Register*/
+	union                                       /*Union because the following two Regs. share the same address*/
+	{
+		volatile uint32_t CFSR;                 /*Configurable Fault Status Register*/
+		volatile uint32_t MMSR;                 /*MemManage Fault Status Register*/
+	};
+	volatile uint8_t BFSR;                      /*BusFault Status Register*/
+	volatile uint16_t UFSR;                     /*UsageFault Status Register*/
+	volatile uint32_t HFSR;                     /*HardFault Status Register*/
+	volatile uint32_t RESERVED1;                /*Reserved for 4 bytes offset*/
+	volatile uint32_t MMAR;                     /*MemManage Fault Address Register*/
+	volatile uint32_t BFAR;                     /*Bus Fault Address Register*/
+	volatile uint32_t AFSR;                     /*Auxiliary Fault Status Register*/
 
-}SYSTICK_RegDef_t;
+
+}SCB_RegDef_t;
 
 
 
-
-
-/******************* GPIO Registers Definition Structures *******************/
-
+/******************* NVIC Registers Definition Structures *******************/
 typedef struct
 {
-	volatile uint32_t MODER;				/*GPIO PORT Mode Register*/
-	volatile uint32_t OTYPER;				/*GPIO PORT Output Type Register*/
-	volatile uint32_t OSPEEDR;				/*GPIO PORT Output speed Register*/
-	volatile uint32_t PUPDR;				/*GPIO PORT Pull-Up/Pull-Down Register*/
-	volatile uint32_t IDR;					/*GPIO PORT Input Data Register*/
-	volatile uint32_t ODR;					/*GPIO PORT Output Data Register*/
-	volatile uint32_t BSRR;					/*GPIO PORT Bit Set/Reset Register*/
-	volatile uint32_t LCKR;					/*GPIO PORT Lock Register*/
-	volatile uint32_t AFR[2];				/*GPIO PORT Alternate Function High & Low Registers*/
-	
-}GPIO_RegDef_t;
+	volatile uint32_t ISER[8];				/*Interrupt Set-enable Registers*/
+	volatile uint32_t RERSERVED1[24];
+	volatile uint32_t ICER[8];				/*Interrupr Clear-enable Registers*/
+	volatile uint32_t RERSERVED2[24];
+	volatile uint32_t ISPR[8];				/*Interrupt Set-Pending Registers*/
+	volatile uint32_t RERSERVED3[24];
+	volatile uint32_t ICPR[8];				/*Interrupt Clear-pending Registers*/
+	volatile uint32_t RERSERVED4[24];
+	volatile uint32_t IABR[8];              /*Interrupt Active Bit Registers*/
+	volatile uint32_t RERSERVED5[56];
+	volatile uint8_t  IPR[240];              /*Interrupt priority Registers*/
+	volatile uint32_t RERSERVED6[643];
+	volatile uint32_t STIR;					/*Software Trigger Interrupt Register*/
+
+}NVIC_RegDef_t;
+
 
 
 /******************* RCC Registers Definition Structures *******************/
@@ -125,19 +148,36 @@ typedef struct
 
 
 
-/******************* SysTick Peripheral Definitions *******************/
-#define SYSTICK	((SYSTICK_RegDef_t *) SYSTICK_BASE_ADDRESS)
+/******************* GPIO Registers Definition Structures *******************/
+typedef struct
+{
+	volatile uint32_t MODER;				/*GPIO PORT Mode Register*/
+	volatile uint32_t OTYPER;				/*GPIO PORT Output Type Register*/
+	volatile uint32_t OSPEEDR;				/*GPIO PORT Output speed Register*/
+	volatile uint32_t PUPDR;				/*GPIO PORT Pull-Up/Pull-Down Register*/
+	volatile uint32_t IDR;					/*GPIO PORT Input Data Register*/
+	volatile uint32_t ODR;					/*GPIO PORT Output Data Register*/
+	volatile uint32_t BSRR;					/*GPIO PORT Bit Set/Reset Register*/
+	volatile uint32_t LCKR;					/*GPIO PORT Lock Register*/
+	volatile uint32_t AFR[2];				/*GPIO PORT Alternate Function High & Low Registers*/
+
+}GPIO_RegDef_t;
+
+
+
+
+/******************* SCB Peripheral Definition *******************/
+#define SCB 	((SCB_RegDef_t *) SCB_BASE_ADDRESS)
+
+/******************* NVIC Peripheral Definition *******************/
+#define NVIC	((NVIC_RegDef_t *) NVIC_BASE_ADDRESS)
 
 
 /******************* RCC Peripheral Definition *******************/
 #define RCC		((RCC_RegDef_t *) RCC_BASE_ADDRESS)
 
 
-
-
-
 /******************* GPIO Peripheral Definitions *******************/
-
 #define GPIOA		((GPIO_RegDef_t *) GPIOA_BASE_ADDRESS)
 #define GPIOB		((GPIO_RegDef_t *) GPIOB_BASE_ADDRESS)
 #define GPIOC		((GPIO_RegDef_t *) GPIOC_BASE_ADDRESS)
@@ -146,7 +186,6 @@ typedef struct
 #define GPIOF		((GPIO_RegDef_t *) GPIOF_BASE_ADDRESS)
 #define GPIOG		((GPIO_RegDef_t *) GPIOG_BASE_ADDRESS)
 #define GPIOH		((GPIO_RegDef_t *) GPIOH_BASE_ADDRESS)
-
 
 
 

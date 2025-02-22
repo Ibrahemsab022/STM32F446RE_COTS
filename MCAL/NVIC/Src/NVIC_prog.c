@@ -83,6 +83,53 @@ NVIC_ErrorState_t NVIC_DisableIRQ(NVIC_IRQs_t Copy_u8IRQNum)
 
 
 
+
+/****************************************************************************************************
+ * 	@brief		 This Function is used to set the priority of the interrupt of a given source.
+ * 	@param 		 NVIC_IRQs_t Copy_u8IRQNum: an enum value that holds the IRQ number(position) from the vector table.
+ * 	@return 	 NVIC_ErrorState_t: return errorState
+ * 	@pre		 perfable SCB_SetPriGroup is used to set the config type of this priority(group vs sub)
+
+ * 	@post 		 Interrupt priority is set for this src
+ * 	Synch/Asynch: Synch.
+ * 	Reentrant/NonReenterant: Re
+ ***************************************************************************************************/
+NVIC_ErrorState_t NVIC_SetPriority(NVIC_IRQs_t Copy_u8IRQNum, uint8_t Copy_u8Priority)
+{
+
+	NVIC_ErrorState_t Local_u8ErrorStates = NVIVC_Exit_Ok;
+
+	if((Copy_u8IRQNum >= MASKABLE_EXCEPTIONS_START) && (Copy_u8IRQNum <= MASKABLE_EXCEPTIONS_END))
+	{
+
+		if((Copy_u8Priority >= 0) && (Copy_u8Priority <= 15))
+		{
+			(NVIC -> IPR[Copy_u8IRQNum]) = Copy_u8Priority << 4;
+
+		}
+
+		else
+		{
+			Local_u8ErrorStates = NVIC_Invalid_Priority;
+		}
+
+
+
+	}
+
+	else
+	{
+		Local_u8ErrorStates = NVIC_Invalid_IRQ;
+	}
+
+	return Local_u8ErrorStates;
+
+}
+
+
+
+
+
 /****************************************************************************************************
  * 	@brief		 This Function is used to set the pending flag of a given source.
  * 	@param 		 NVIC_IRQs_t Copy_u8IRQNum: an enum value that holds the IRQ number(position) from the vector table.
