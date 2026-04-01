@@ -4,6 +4,8 @@
  * author: Ibrahim Saber
  * version: 1.0
  * date: 8 - 10 -2024
+ * Last Update:     09:50 PM, Wednesday, April 1, 2026
+ * Last touch:      09:50 PM, Wednesday, April 1, 2026
  ****************************************************/
 
 #include "stdint.h"
@@ -76,6 +78,9 @@ uint8_t GPIO_u8PinInit(const PinConfig_t * PinConfigs)
 						GPIOA -> AFR[1] |= ((PinConfigs -> AltFunc) << ((PinConfigs -> PinNum) * 4));
 					}
 				}
+
+
+				break;
 			}
 
 			/******************* PORTB *******************/
@@ -118,6 +123,8 @@ uint8_t GPIO_u8PinInit(const PinConfig_t * PinConfigs)
 						GPIOB -> AFR[1] |= ((PinConfigs -> AltFunc) << ((PinConfigs -> PinNum) * 4));
 					}
 				}
+
+				break;
 			}
 
 
@@ -161,6 +168,8 @@ uint8_t GPIO_u8PinInit(const PinConfig_t * PinConfigs)
 						GPIOC -> AFR[1] |= ((PinConfigs -> AltFunc) << ((PinConfigs -> PinNum) * 4));
 					}
 				}
+
+				break;
 			}
 
 			/******************* PORTD *******************/
@@ -203,6 +212,8 @@ uint8_t GPIO_u8PinInit(const PinConfig_t * PinConfigs)
 						GPIOD -> AFR[1] |= ((PinConfigs -> AltFunc) << ((PinConfigs -> PinNum) * 4));
 					}
 				}
+
+				break;
 			}
 
 			/******************* PORTE *******************/
@@ -245,6 +256,8 @@ uint8_t GPIO_u8PinInit(const PinConfig_t * PinConfigs)
 						GPIOE -> AFR[1] |= ((PinConfigs -> AltFunc) << ((PinConfigs -> PinNum) * 4));
 					}
 				}
+
+				break;
 			}
 
 			/******************* PORTF *******************/
@@ -287,6 +300,8 @@ uint8_t GPIO_u8PinInit(const PinConfig_t * PinConfigs)
 						GPIOF -> AFR[1] |= ((PinConfigs -> AltFunc) << ((PinConfigs -> PinNum) * 4));
 					}
 				}
+
+				break;
 			}
 
 			/******************* PORTG *******************/
@@ -329,6 +344,8 @@ uint8_t GPIO_u8PinInit(const PinConfig_t * PinConfigs)
 						GPIOG -> AFR[1] |= ((PinConfigs -> AltFunc) << ((PinConfigs -> PinNum) * 4));
 					}
 				}
+
+				break;
 			}
 
 			/******************* PORTH *******************/
@@ -371,10 +388,12 @@ uint8_t GPIO_u8PinInit(const PinConfig_t * PinConfigs)
 						GPIOH -> AFR[1] |= ((PinConfigs -> AltFunc) << ((PinConfigs -> PinNum) * 4));
 					}
 				}
+
+				break;
 			}
 
 
-			default: ErrorState = GPIO_InvalidPortName;
+			default: ErrorState = GPIO_InvalidPortName; break;
 
 		}
 
@@ -418,65 +437,64 @@ uint8_t GPIO_u8SetPinValue(Port_t Port, Pin_t PinNum, PinVal_t PinVal)
 	{
 		switch(Port)
 		{
-
-		/******************* PORTA *******************/
 			case PORTA:
 			{
 				GPIOA -> ODR &= ~(GPIO_1BIT_MASK << PinNum);
 				GPIOA -> ODR |= ((PinVal << PinNum));
+				break;
 			}
 
-		/******************* PORTB *******************/
 			case PORTB:
 			{
 				GPIOB -> ODR &= ~(GPIO_1BIT_MASK << PinNum);
 				GPIOB -> ODR |= ((PinVal << PinNum));
+				break;
 			}
 
-		/******************* PORTC *******************/
 			case PORTC:
 			{
 				GPIOC -> ODR &= ~(GPIO_1BIT_MASK << PinNum);
 				GPIOC -> ODR |= ((PinVal << PinNum));
+				break;
 			}
 
-		/******************* PORTD *******************/
 			case PORTD:
 			{
 				GPIOD -> ODR &= ~(GPIO_1BIT_MASK << PinNum);
 				GPIOD -> ODR |= ((PinVal << PinNum));
+				break;
 			}
 
-		/******************* PORTE *******************/
 			case PORTE:
 			{
 				GPIOE -> ODR &= ~(GPIO_1BIT_MASK << PinNum);
 				GPIOE -> ODR |= ((PinVal << PinNum));
+				break;
 			}
 
-		/******************* PORTF *******************/
 			case PORTF:
 			{
 				GPIOF -> ODR &= ~(GPIO_1BIT_MASK << PinNum);
 				GPIOF -> ODR |= ((PinVal << PinNum));
+				break;
 			}
 
-		/******************* PORTG *******************/
 			case PORTG:
 			{
 				GPIOG -> ODR &= ~(GPIO_1BIT_MASK << PinNum);
 				GPIOG -> ODR |= ((PinVal << PinNum));
+				break;
 			}
 
-		/******************* PORTH *******************/
 			case PORTH:
 			{
 				GPIOH -> ODR &= ~(GPIO_1BIT_MASK << PinNum);
 				GPIOH -> ODR |= ((PinVal << PinNum));
+				break;
 			}
 
 
-			default: ErrorState = GPIO_InvalidPortName;
+			default: ErrorState = GPIO_InvalidPortName; break;
 
 		}
 
@@ -512,80 +530,26 @@ uint8_t GPIO_u8TogglePinValue(Port_t Port, Pin_t PinNum)
 {
 	GPIOErrorStates_t ErrorState = GPIO_Exit_OK;
 
-
 	if ((PinNum >= 0) && (PinNum <= 15))
 	{
 		switch(Port)
 		{
-
-		/******************* PORTA *******************/
-			case PORTA:
-			{
-				GPIOA -> ODR &= ~(GPIO_1BIT_MASK << PinNum);
-				GPIOA -> ODR ^= ((1 << PinNum));
-			}
-
-		/******************* PORTB *******************/
-			case PORTB:
-			{
-				GPIOB -> ODR &= ~(GPIO_1BIT_MASK << PinNum);
-				GPIOB -> ODR ^= ((1 << PinNum));
-			}
-
-		/******************* PORTC *******************/
-			case PORTC:
-			{
-				GPIOC -> ODR &= ~(GPIO_1BIT_MASK << PinNum);
-				GPIOC -> ODR ^= ((1 << PinNum));
-			}
-
-		/******************* PORTD *******************/
-			case PORTD:
-			{
-				GPIOD -> ODR &= ~(GPIO_1BIT_MASK << PinNum);
-				GPIOD -> ODR ^= ((1 << PinNum));
-			}
-
-		/******************* PORTE *******************/
-			case PORTE:
-			{
-				GPIOE -> ODR &= ~(GPIO_1BIT_MASK << PinNum);
-				GPIOE -> ODR ^= ((1 << PinNum));
-			}
-
-		/******************* PORTF *******************/
-			case PORTF:
-			{
-				GPIOF -> ODR &= ~(GPIO_1BIT_MASK << PinNum);
-				GPIOF -> ODR ^= ((1 << PinNum));
-			}
-
-		/******************* PORTG *******************/
-			case PORTG:
-			{
-				GPIOG -> ODR &= ~(GPIO_1BIT_MASK << PinNum);
-				GPIOG -> ODR ^= ((1 << PinNum));
-			}
-
-		/******************* PORTH *******************/
-			case PORTH:
-			{
-				GPIOH -> ODR &= ~(GPIO_1BIT_MASK << PinNum);
-				GPIOH -> ODR ^= ((1 << PinNum));
-			}
-
-
-			default: ErrorState = GPIO_InvalidPortName;
-
+			case PORTA: GPIOA -> ODR ^= ((1 << PinNum)); break;
+			case PORTB: GPIOB -> ODR ^= ((1 << PinNum)); break;
+			case PORTC: GPIOC -> ODR ^= ((1 << PinNum)); break;
+			case PORTD: GPIOD -> ODR ^= ((1 << PinNum)); break;
+			case PORTE: GPIOE -> ODR ^= ((1 << PinNum)); break;
+			case PORTF: GPIOF -> ODR ^= ((1 << PinNum)); break;
+			case PORTG: GPIOG -> ODR ^= ((1 << PinNum)); break;
+			case PORTH: GPIOH -> ODR ^= ((1 << PinNum)); break;
+			default: ErrorState = GPIO_InvalidPortName; break;
 		}
-
 	}
 
 	else
 	{
 		ErrorState = GPIO_InvalidPinNum;
 	}
-
 
 	return ErrorState;
 }
@@ -613,7 +577,6 @@ uint8_t GPIO_u8ReadPinValue(Port_t Port, Pin_t PinNum, PinVal_t* PinVal)
 
 	GPIOErrorStates_t ErrorState = GPIO_Exit_OK;
 
-
 	if (PinVal != NULL)
 	{
 		if ((PinNum >= 0) && (PinNum <= 15))
@@ -630,21 +593,18 @@ uint8_t GPIO_u8ReadPinValue(Port_t Port, Pin_t PinNum, PinVal_t* PinVal)
 				case PORTH: *PinVal = (((GPIOH -> IDR) >> PinNum) & (1)); break;
 				default: ErrorState = GPIO_InvalidPortName; break;
 			}
-
 		}
 
 		else
 		{
 			ErrorState = GPIO_InvalidPinNum;
 		}
-
 	}
 
 	else
 	{
 		ErrorState = GPIO_NullPtr;
 	}
-
 
 	return ErrorState;
 
