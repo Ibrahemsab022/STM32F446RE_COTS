@@ -3,21 +3,28 @@
 
 
 
+																	/*********************
+																	
+																   Peripherals Base Addresses
+																	
+																	**********************/
 
-/******************* Core Peripherals Base Addresses *******************/
+
+
+											/******************* Core Peripherals Base Addresses *******************/
 /*@todo: add systic*/
 #define NVIC_BASE_ADDRESS	 	0xE000E100UL
 #define SCB_BASE_ADDRESS		0xE000E008UL
 
 
 
-/******************* Various Memories Base Addresses *******************/
+											/******************* Various Memories Base Addresses *******************/
 #define FLASH_BASE_ADDRESS		0x08004000UL
 #define SRAM_BASE_ADDRESS		0x20000000UL
 #define ROM_BASE_ADDRESS		0x1FFF0000UL
 
 
-/******************* AHB1 Peripheral Base Addresses *******************/
+											/******************* AHB1 Peripheral Base Addresses *******************/
 #define GPIOA_BASE_ADDRESS		0x40020000U			
 #define GPIOB_BASE_ADDRESS      0x40020400U 
 #define GPIOC_BASE_ADDRESS      0x40020800U
@@ -30,28 +37,42 @@
 
 #define RCC_BASE_ADDRESS		0x40023800U
 
-/******************* AHB2 Peripheral Base Addresses *******************/
+											/******************* AHB2 Peripheral Base Addresses *******************/
 
 
 
 
 
 
-/******************* AHB3 Peripheral Base Addresses *******************/
+											/******************* AHB3 Peripheral Base Addresses *******************/
 
 
 
 
-/******************* APB1 Peripheral Base Addresses *******************/
+											/******************* APB1 Peripheral Base Addresses *******************/
 
 
 
 
 
-/******************* APB2 Peripheral Base Addresses *******************/
+											/******************* APB2 Peripheral Base Addresses *******************/
+#define SYSCFG_BASE_ADDRESS		0x40013800U
+#define EXTI_BASE_ADDRESS		0x40013C00U
 
 
 
+
+
+
+
+																	/*********************													
+																	
+															Peripherals Registers Definition Structures
+																	
+																	 **********************/
+
+
+											/******************* Core Peripherals Registers Definition Structures *******************/
 
 /******************* SCB Registers Definition Structures *******************/
 typedef struct
@@ -105,6 +126,10 @@ typedef struct
 
 
 
+
+
+											/******************* AHB1 Peripheral Registers Definition Structures *******************/
+
 /******************* RCC Registers Definition Structures *******************/
 typedef struct
 {
@@ -147,7 +172,6 @@ typedef struct
 }RCC_RegDef_t;
 
 
-
 /******************* GPIO Registers Definition Structures *******************/
 typedef struct
 {
@@ -163,15 +187,77 @@ typedef struct
 
 }GPIO_RegDef_t;
 
+											/******************* AHB2 Peripheral Registers Definition Structures *******************/
 
 
+
+
+
+
+											/******************* AHB3 Peripheral Registers Definition Structures *******************/
+
+
+
+
+											/******************* APB1 Peripheral Registers Definition Structures *******************/
+
+
+
+
+
+											/******************* APB2 Peripheral Registers Definition Structures *******************/
+											
+/******************* SYSCFG Registers Definition Structures *******************/
+typedef struct
+{
+	volatile uint32_t MEMRMP;				/*Memory remap register*/			
+	volatile uint32_t PMC;			        /*Peripheral mode configuration register*/
+	volatile uint32_t EXTICR[4];			/*External interrupt configuration registers*/
+	volatile uint16_t RESERVED0;			/*Reserved 0x18~0x20*/
+	volatile uint32_t CMPCR;				/*Compensation cell control register*/
+	volatile uint32_t RESERVED1[3];			/*Reserved 0x24~0x2C */
+	volatile uint32_t CFGR;					/*Configuration register*/
+
+}SYSCFG_RegDef_t;
+
+
+/******************* EXTI Registers Definition Structures *******************/
+typedef struct
+{
+	volatile uint32_t IMR 						/*Interrupt Mask Register*/
+	volatile uint32_t EMR						/*Event Mask Register*/
+	volatile uint32_t RTSR						/*Rising Trigger Selection Register*/
+	volatile uint32_t FTSR						/*Falling Trigger Selection Register*/
+	volatile uint32_t SWIER						/*Software Interrupt Event Register*/
+	volatile uint32_t PR						/*Pending Register*/
+
+}EXTI_RegDef_t;
+
+																	/*********************
+																	
+																   	Peripherals Definitions
+																	
+																	**********************/
+
+
+											/******************* Core Peripherals Definitions *******************/
 
 /******************* SCB Peripheral Definition *******************/
-#define SCB 	((SCB_RegDef_t *) SCB_BASE_ADDRESS)
+#define SCB 	((SCB_RegDef_t *)  SCB_BASE_ADDRESS)
 
 /******************* NVIC Peripheral Definition *******************/
 #define NVIC	((NVIC_RegDef_t *) NVIC_BASE_ADDRESS)
 
+
+
+
+
+
+
+
+
+
+											/******************* AHB1 Peripherals Definitions *******************/
 
 /******************* RCC Peripheral Definition *******************/
 #define RCC		((RCC_RegDef_t *) RCC_BASE_ADDRESS)
@@ -186,6 +272,47 @@ typedef struct
 #define GPIOF		((GPIO_RegDef_t *) GPIOF_BASE_ADDRESS)
 #define GPIOG		((GPIO_RegDef_t *) GPIOG_BASE_ADDRESS)
 #define GPIOH		((GPIO_RegDef_t *) GPIOH_BASE_ADDRESS)
+
+
+
+
+											/******************* AHB2 Peripherals Definitions *******************/
+
+
+
+
+
+
+											/******************* AHB3 Peripherals Definitions *******************/
+
+
+
+
+											/******************* APB1 Peripherals Definitions *******************/
+
+
+
+
+
+											/******************* APB2 Peripherals Definitions *******************/
+
+/******************* SYSCFG Peripheral Definition *******************/
+#define ((SYSCFG_RegDef_t *) SYSCFG_BASE_ADDRESS)
+#define ((EXTI_RegDef_t *)	 EXTI_BASE_ADDRESS)								
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -620,58 +620,15 @@ uint8_t GPIO_u8ReadPinValue(Port_t Port, Pin_t PinNum, PinVal_t* PinVal)
 		{
 			switch(Port)
 			{
-
-			/******************* PORTA *******************/
-				case PORTA:
-				{
-					*PinVal = GPIOA -> IDR & (1 >> PinNum);
-				}
-
-			/******************* PORTB *******************/
-				case PORTB:
-				{
-					*PinVal = GPIOB -> IDR & (1 >> PinNum);
-				}
-
-		/******************* PORTC *******************/
-				case PORTC:
-				{
-					*PinVal = GPIOC -> IDR & (1 >> PinNum);
-				}
-
-		/******************* PORTD *******************/
-				case PORTD:
-				{
-					*PinVal = GPIOD -> IDR & (1 >> PinNum);
-				}
-
-		/******************* PORTE *******************/
-				case PORTE:
-				{
-					*PinVal = GPIOE -> IDR & (1 >> PinNum);
-				}
-
-		/******************* PORTF *******************/
-				case PORTF:
-				{
-					*PinVal = GPIOF -> IDR & (1 >> PinNum);
-				}
-
-		/******************* PORTG *******************/
-				case PORTG:
-				{
-					*PinVal = GPIOG -> IDR & (1 >> PinNum);
-				}
-
-		/******************* PORTH *******************/
-				case PORTH:
-				{
-					*PinVal = GPIOH -> IDR & (1 >> PinNum);
-				}
-
-
-				default: ErrorState = GPIO_InvalidPortName;
-
+				case PORTA: *PinVal = (((GPIOA -> IDR) >> PinNum) & (1)); break;
+				case PORTB: *PinVal = (((GPIOB -> IDR) >> PinNum) & (1)); break;
+				case PORTC: *PinVal = (((GPIOC -> IDR) >> PinNum) & (1)); break;
+				case PORTD: *PinVal = (((GPIOD -> IDR) >> PinNum) & (1)); break;
+				case PORTE: *PinVal = (((GPIOE -> IDR) >> PinNum) & (1)); break;
+				case PORTF: *PinVal = (((GPIOF -> IDR) >> PinNum) & (1)); break;
+				case PORTG: *PinVal = (((GPIOG -> IDR) >> PinNum) & (1)); break;
+				case PORTH: *PinVal = (((GPIOH -> IDR) >> PinNum) & (1)); break;
+				default: ErrorState = GPIO_InvalidPortName; break;
 			}
 
 		}
