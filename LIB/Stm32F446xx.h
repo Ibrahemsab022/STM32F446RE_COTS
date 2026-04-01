@@ -1,3 +1,14 @@
+/***************************************************************************************************
+ * @file: 			Stm32F466xx.h
+ * @brief: 			This file contains the hardware map and registers of the STM32F466xx family
+ * @author: 		Ibrahim Saber
+ * @version: 		1.0
+ * @date: 			24-03-2025
+ * Last Update:     08:11 PM, Wednesday, April 1, 2026
+ * Last touch:      10:20 PM, Monday, March 24, 2025
+ ****************************************************************************************************/
+
+
 #ifndef STM32F446xx_H
 #define STM32F446xx_H
 
@@ -224,12 +235,12 @@ typedef struct
 /******************* EXTI Registers Definition Structures *******************/
 typedef struct
 {
-	volatile uint32_t IMR 						/*Interrupt Mask Register*/
-	volatile uint32_t EMR						/*Event Mask Register*/
-	volatile uint32_t RTSR						/*Rising Trigger Selection Register*/
-	volatile uint32_t FTSR						/*Falling Trigger Selection Register*/
-	volatile uint32_t SWIER						/*Software Interrupt Event Register*/
-	volatile uint32_t PR						/*Pending Register*/
+	volatile uint32_t IMR; 						/*Interrupt Mask Register*/
+	volatile uint32_t EMR;						/*Event Mask Register*/
+	volatile uint32_t RTSR;						/*Rising Trigger Selection Register*/
+	volatile uint32_t FTSR;						/*Falling Trigger Selection Register*/
+	volatile uint32_t SWIER;						/*Software Interrupt Event Register*/
+	volatile uint32_t PR;						/*Pending Register*/
 
 }EXTI_RegDef_t;
 
@@ -297,8 +308,8 @@ typedef struct
 											/******************* APB2 Peripherals Definitions *******************/
 
 /******************* SYSCFG Peripheral Definition *******************/
-#define ((SYSCFG_RegDef_t *) SYSCFG_BASE_ADDRESS)
-#define ((EXTI_RegDef_t *)	 EXTI_BASE_ADDRESS)								
+#define SYSCFG		((SYSCFG_RegDef_t *) SYSCFG_BASE_ADDRESS)
+#define EXTI		((EXTI_RegDef_t *)	 EXTI_BASE_ADDRESS)
 
 
 
